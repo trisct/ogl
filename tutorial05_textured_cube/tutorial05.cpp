@@ -27,8 +27,8 @@ int main( void )
 	}
 
 	glfwWindowHint(GLFW_SAMPLES, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
@@ -69,13 +69,13 @@ int main( void )
 	// Get a handle for our "MVP" uniform
 	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
 
-	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
+	// Projection matrix : 45ï¿½ Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
 	glm::mat4 Projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
 	// Camera matrix
 	glm::mat4 View       = glm::lookAt(
-								glm::vec3(4,3,3), // Camera is at (4,3,3), in World Space
+								glm::vec3(-12,9,9), // Camera is at (4,3,3), in World Space
 								glm::vec3(0,0,0), // and looks at the origin
-								glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
+								glm::vec3(0,-1,0)  // Head is up (set to 0,-1,0 to look upside-down)
 						   );
 	// Model matrix : an identity matrix (model will be at the origin)
 	glm::mat4 Model      = glm::mat4(1.0f);
@@ -83,8 +83,8 @@ int main( void )
 	glm::mat4 MVP        = Projection * View * Model; // Remember, matrix multiplication is the other way around
 
 	// Load the texture using any two methods
-	//GLuint Texture = loadBMP_custom("uvtemplate.bmp");
-	GLuint Texture = loadDDS("uvtemplate.DDS");
+	GLuint Texture = loadBMP_custom("uvtemplate.bmp");
+	// GLuint Texture = loadDDS("uvtemplate.DDS");
 	
 	// Get a handle for our "myTextureSampler" uniform
 	GLuint TextureID  = glGetUniformLocation(programID, "myTextureSampler");
@@ -110,24 +110,24 @@ int main( void )
 		 1.0f,-1.0f, 1.0f,
 		-1.0f,-1.0f, 1.0f,
 		-1.0f,-1.0f,-1.0f,
-		-1.0f, 1.0f, 1.0f,
-		-1.0f,-1.0f, 1.0f,
-		 1.0f,-1.0f, 1.0f,
-		 1.0f, 1.0f, 1.0f,
-		 1.0f,-1.0f,-1.0f,
-		 1.0f, 1.0f,-1.0f,
-		 1.0f,-1.0f,-1.0f,
-		 1.0f, 1.0f, 1.0f,
-		 1.0f,-1.0f, 1.0f,
-		 1.0f, 1.0f, 1.0f,
-		 1.0f, 1.0f,-1.0f,
-		-1.0f, 1.0f,-1.0f,
-		 1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f,-1.0f,
-		-1.0f, 1.0f, 1.0f,
-		 1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f,
-		 1.0f,-1.0f, 1.0f
+		// -1.0f, 1.0f, 1.0f,
+		// -1.0f,-1.0f, 1.0f,
+		//  1.0f,-1.0f, 1.0f,
+		//  1.0f, 1.0f, 1.0f,
+		//  1.0f,-1.0f,-1.0f,
+		//  1.0f, 1.0f,-1.0f,
+		//  1.0f,-1.0f,-1.0f,
+		//  1.0f, 1.0f, 1.0f,
+		//  1.0f,-1.0f, 1.0f,
+		//  1.0f, 1.0f, 1.0f,
+		//  1.0f, 1.0f,-1.0f,
+		// -1.0f, 1.0f,-1.0f,
+		//  1.0f, 1.0f, 1.0f,
+		// -1.0f, 1.0f,-1.0f,
+		// -1.0f, 1.0f, 1.0f,
+		//  1.0f, 1.0f, 1.0f,
+		// -1.0f, 1.0f, 1.0f,
+		//  1.0f,-1.0f, 1.0f
 	};
 
 	// Two UV coordinatesfor each vertex. They were created with Blender.
@@ -150,24 +150,24 @@ int main( void )
 		0.667979f, 1.0f-0.335851f, 
 		0.335973f, 1.0f-0.335903f, 
 		0.336024f, 1.0f-0.671877f, 
-		1.000004f, 1.0f-0.671847f, 
-		0.999958f, 1.0f-0.336064f, 
-		0.667979f, 1.0f-0.335851f, 
-		0.668104f, 1.0f-0.000013f, 
-		0.335973f, 1.0f-0.335903f, 
-		0.667979f, 1.0f-0.335851f, 
-		0.335973f, 1.0f-0.335903f, 
-		0.668104f, 1.0f-0.000013f, 
-		0.336098f, 1.0f-0.000071f, 
-		0.000103f, 1.0f-0.336048f, 
-		0.000004f, 1.0f-0.671870f, 
-		0.336024f, 1.0f-0.671877f, 
-		0.000103f, 1.0f-0.336048f, 
-		0.336024f, 1.0f-0.671877f, 
-		0.335973f, 1.0f-0.335903f, 
-		0.667969f, 1.0f-0.671889f, 
-		1.000004f, 1.0f-0.671847f, 
-		0.667979f, 1.0f-0.335851f
+		// 1.000004f, 1.0f-0.671847f, 
+		// 0.999958f, 1.0f-0.336064f, 
+		// 0.667979f, 1.0f-0.335851f, 
+		// 0.668104f, 1.0f-0.000013f, 
+		// 0.335973f, 1.0f-0.335903f, 
+		// 0.667979f, 1.0f-0.335851f, 
+		// 0.335973f, 1.0f-0.335903f, 
+		// 0.668104f, 1.0f-0.000013f, 
+		// 0.336098f, 1.0f-0.000071f, 
+		// 0.000103f, 1.0f-0.336048f, 
+		// 0.000004f, 1.0f-0.671870f, 
+		// 0.336024f, 1.0f-0.671877f, 
+		// 0.000103f, 1.0f-0.336048f, 
+		// 0.336024f, 1.0f-0.671877f, 
+		// 0.335973f, 1.0f-0.335903f, 
+		// 0.667969f, 1.0f-0.671889f, 
+		// 1.000004f, 1.0f-0.671847f, 
+		// 0.667979f, 1.0f-0.335851f
 	};
 
 	GLuint vertexbuffer;
@@ -181,7 +181,6 @@ int main( void )
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_STATIC_DRAW);
 
 	do{
-
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

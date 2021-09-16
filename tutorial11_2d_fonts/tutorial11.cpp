@@ -232,9 +232,16 @@ int main( void )
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
 
-		char text[256];
-		sprintf(text,"%.2f sec", glfwGetTime() );
-		printText2D(text, 10, 500, 60);
+		// char text[256];
+		// sprintf(text,"%.2f sec", glfwGetTime() );
+		// printText2D(text, 10, 500, 60);
+
+		double xpos, ypos;
+		glfwGetCursorPos(window, &xpos, &ypos);
+		char text_cursor_pos[256];
+		// printf("x = %.2lf, y = %.2lf ", xpos, ypos);
+		sprintf(text_cursor_pos,"x = %.2lf, y = %.2lf ", xpos, ypos);
+		printText2D(text_cursor_pos, 10, 500, 20);
 
 		// Swap buffers
 		glfwSwapBuffers(window);

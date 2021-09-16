@@ -180,7 +180,11 @@ int main( void )
 	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_STATIC_DRAW);
 
+	int show_cursor_pos_counter = 0;
+
 	do{
+		show_cursor_pos_counter++;
+		show_cursor_pos_counter = show_cursor_pos_counter % 100;
 
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -238,6 +242,12 @@ int main( void )
 		// Swap buffers
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+
+		double xpos, ypos;
+		if (show_cursor_pos_counter % 25 == 0) {
+			glfwGetCursorPos(window, &xpos, &ypos);
+			printf("%lf, %lf\n", xpos, ypos);
+		}
 
 	} // Check if the ESC key was pressed or the window was closed
 	while( glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
